@@ -5,14 +5,14 @@ pipeline {
         MAVEN_HOME = "/opt/apache-maven"
         PATH = "$MAVEN_HOME/bin:$PATH"
         DEPLOY_PATH = "/opt/tomcat/webapps"
- 	}
+    }
 
     stages {
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/Chandrakanth-Git-Hub/git.git', branch: 'main'
             }
-        }
+    }
     
     stage('Build') {
             steps {
@@ -20,15 +20,15 @@ pipeline {
                     sh 'mvn clean package'
                 }
             }
-        }
+    }
     
     stage('Test') {
             steps {
                 dir('hello-world') {
                     sh 'mvn test'
                 }
-            }
-        }
+          }
+    }
     
     stage('Deploy to Tomcat') {
             steps {
@@ -53,8 +53,8 @@ pipeline {
             subject: "FAILURE: ${currentBuild.fullDisplayName}",
             body: "Build FAILED: ${env.BUILD_URL}",
             to: "chandubhavi123@gmail.com"
-        )
+            )
+        }
     }
-  }
 }
 
