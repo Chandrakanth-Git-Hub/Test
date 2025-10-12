@@ -29,7 +29,7 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 echo 'Deploying WAR file to Tomcat...'
-                sh 'sudo cp target/hello-world.war $DEPLOY_PATH/'
+                sh 'cp target/hello-world.war $DEPLOY_PATH/'
             }
         }
     }
