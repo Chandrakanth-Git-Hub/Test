@@ -16,20 +16,26 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                dir('hello-world') {
+                    sh 'mvn clean package'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                dir('hello-world') {
+                    sh 'mvn test'
+                }
             }
         }
 
         stage('Deploy to Tomcat') {
             steps {
-                echo 'Deploying WAR file to Tomcat...'
-                sh 'cp target/hello-world.war $DEPLOY_PATH/'
+                dir('hello-world') {
+                    echo 'Deploying WAR file to Tomcat...'
+                    sh "cp target/hello-world.war $DEPLOY_PATH/"
+                }
             }
         }
     }
