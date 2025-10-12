@@ -13,24 +13,24 @@ pipeline {
                 git url: 'https://github.com/Chandrakanth-Git-Hub/git.git', branch: 'main'
             }
         }
-
-        stage('Build') {
+    
+    stage('Build') {
             steps {
                 dir('hello-world') {
                     sh 'mvn clean package'
                 }
             }
         }
-
-        stage('Test') {
+    
+    stage('Test') {
             steps {
                 dir('hello-world') {
                     sh 'mvn test'
                 }
             }
         }
-
-        stage('Deploy to Tomcat') {
+    
+    stage('Deploy to Tomcat') {
             steps {
                 dir('hello-world') {
                     echo 'Deploying WAR file to Tomcat...'
@@ -55,6 +55,6 @@ pipeline {
             to: "chandubhavi123@gmail.com"
         )
     }
-}
+  }
 }
 
