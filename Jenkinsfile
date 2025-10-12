@@ -45,22 +45,14 @@ pipeline {
         emailext(
             subject: "SUCCESS: ${currentBuild.fullDisplayName}",
             body: "Build SUCCESSFUL: ${env.BUILD_URL}",
-            to: "chandubhavi123@gmail.com",
-            from: "chandubhavi123@gmail.com",
-            replyTo: "chandubhavi123@gmail.com",
-            smtpUsername: "chandubhavi123@gmail.com",
-            smtpPassword: credentials('gmail-cred')
+            to: "chandubhavi123@gmail.com"
         )
     }
     failure {
         emailext(
             subject: "FAILURE: ${currentBuild.fullDisplayName}",
             body: "Build FAILED: ${env.BUILD_URL}",
-            to: "chandubhavi123@gmail.com",
-            from: "chandubhavi123@gmail.com",
-            replyTo: "chandubhavi123@gmail.com",
-            smtpUsername: "chandubhavi123@gmail.com",
-            smtpPassword: credentials('gmail-cred')
+            to: "chandubhavi123@gmail.com"
         )
     }
 }
