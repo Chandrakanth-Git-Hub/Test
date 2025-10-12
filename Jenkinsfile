@@ -5,12 +5,12 @@ pipeline {
         MAVEN_HOME = "/opt/apache-maven"
         PATH = "$MAVEN_HOME/bin:$PATH"
         DEPLOY_PATH = "/opt/tomcat/webapps"
-    }
+ 	}
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Chandrakanth-Git-Hub/git.git'
+                git url: 'https://github.com/Chandrakanth-Git-Hub/git.git', branch: 'main'
             }
         }
 
@@ -34,7 +34,7 @@ pipeline {
             steps {
                 dir('hello-world') {
                     echo 'Deploying WAR file to Tomcat...'
-                    sh "cp target/hello-world.war $DEPLOY_PATH/"
+                    sh 'cp target/hello-world.war /opt/tomcat/webapps/'
                 }
             }
         }
@@ -42,14 +42,28 @@ pipeline {
 
     post {
         success {
-            emailext subject: "✅ Build Successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                     body: "Good news! Build #${env.BUILD_NUMBER} succeeded.",
-                     to: "chandubhavi123@gmail.com"
+            echo 'Build and deploy succeeded! Sending email...'
+            emailext(
+                to: 'chandubhavi123@gmail.com',
+                subject: "Jenkins: SUCCESS - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Build SUCCESSFUL</p>
+                         <p>Job: ${env.JOB_NAME}</p>
+                         <p>Build Number: ${env.BUILD_NUMBER}</p>
+                         <p>Check console output at ${env.BUILD_URL}</p>""",
+                mimeType: 'text/html'
+            )
         }
         failure {
-            emailext subject: "❌ Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                     body: "Build #${env.BUILD_NUMBER} failed. Please check Jenkins logs.",
-                     to: "chandubhavi123@gmail.com"
+            echo 'Build failed! Sending email...'
+            emailext(
+                to: 'chandubhavi123@gmail.com',
+                subject: "Jenkins: FAILURE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Build FAILED</p>
+                         <p>Job: ${env.JOB_NAME}</p>
+                         <p>Build Number: ${env.BUILD_NUMBER}</p>
+                         <p>Check console output at ${env.BUILD_URL}</p>""",
+                mimeType: 'text/html'
+            )
         }
     }
 }
