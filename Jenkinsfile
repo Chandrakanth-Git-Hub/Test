@@ -5,13 +5,13 @@ pipeline {
         MAVEN_HOME = "/opt/apache-maven"
         PATH = "$MAVEN_HOME/bin:$PATH"
         DEPLOY_PATH = "/opt/tomcat/webapps"
-    }
+                }
 
     stages {
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/Chandrakanth-Git-Hub/git.git', branch: 'main'
-            }
+                  }
     }
     
     stage('Build') {
